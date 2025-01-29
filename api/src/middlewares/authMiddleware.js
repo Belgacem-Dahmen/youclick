@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const roles = require('../Enums/Roles');
 // const User = require('../models/User'); // assuming you have a User model
 
 // Middleware to check if the user is authenticated
@@ -30,7 +31,7 @@ const authenticateAdmin = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
 
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== roles.ADMIN) {
       return res.status(403).json({ message: 'Permission denied, admin only' });
     }
     next();

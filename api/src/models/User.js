@@ -1,15 +1,15 @@
 // src/models/User.js
 
 const database = require('../config/database'); // MySQL connection
-
+const roles = require('../Enums/Roles')
 // User Model
 const User = {
   // Create a new user
   async create(username, email, password) {
-    const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+    const query = `INSERT INTO users (username, email, password,role_id) VALUES (?, ?, ?,${roles.USER})`;
     try {
       const [result] = await database.execute(query, [username, email, password]);
-      return result.insertId; // Return the newly created user ID
+      return result.insertId; 
     } catch (error) {
       throw new Error('Error creating user: ' + error.message);
     }
