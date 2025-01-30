@@ -31,7 +31,6 @@ const authenticateAdmin = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    console.log(req.user)
     if (req.user.role_id !== roles.ADMIN) {
       return res.status(403).json({ message: 'Permission denied, admin only' });
     }
