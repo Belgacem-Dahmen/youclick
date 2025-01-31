@@ -1,14 +1,19 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue";
-</script>
-
 <template>
-  <Navbar />
-
-  <main class="h-full">
-    <RouterView />
-  </main>
+  <component :is="layoutComponent">
+    <router-view />
+  </component>
 </template>
 
-<style scoped></style>
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import GuestLayout from "@/layouts/Guest.vue";
+import AuthLayout from "@/layouts/Auth.vue";
+
+const route = useRoute();
+
+const layoutComponent = computed(() => {
+  return route.meta.layout === "auth" ? AuthLayout : GuestLayout;
+});
+</script>
+
