@@ -1,5 +1,6 @@
 <template>
   <BaseHeader header="Profile" />
+  <GlobalLoader v-if="loading" />
   <form class="m-6 p-10">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
@@ -409,6 +410,7 @@
       </button>
       <button
         type="submit"
+        @submit.prevent="handleUpdate"
         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
         Save
@@ -429,13 +431,22 @@ import BaseButton from "@/components/ui/BaseButton.vue";
 import ProfilePhoto from "@/components/ui/ProfilePhoto.vue";
 
 import { useProfileStore } from "@/stores/profileStore";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 // Access the profile store
 const profileStore = useProfileStore();
+const loading = ref(true);
 
 // Fetch the profile data when the component is mounted
 onMounted(async () => {
   await profileStore.getProfile();
+  loading.value = false;
 });
+const formData = {
+    email: email.value,
+    password: password.value,
+  };
+const handleUpdate = () => {
+  profileStore.updateProfile();
+};
 </script>

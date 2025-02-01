@@ -2,6 +2,7 @@
   <div>
     <main>
       <AuthNavbar />
+      <GlobalLoader v-if="loading" />
       <slot />
     </main>
   </div>
@@ -9,4 +10,7 @@
 
 <script setup>
 import AuthNavbar from "@/components/AuthNavbar.vue";
+import { ref } from "vue";
+
+const loading = ref(false);
 </script>

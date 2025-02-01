@@ -63,10 +63,7 @@ const password = ref("");
 const authStore = useAuthStore();
 
 const handleLogin = async () => {
-  const formData = {
-    email: email.value,
-    password: password.value,
-  };
+  
 
   try {
     await authStore.login(formData);
