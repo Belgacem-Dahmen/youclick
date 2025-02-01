@@ -11,6 +11,7 @@ const testRoutes = require("./v1/testRoutes");
 const roleRoutes = require("./v1/roleRoutes");
 const testCaseRoutes = require("./v1/testCaseRoutes");
 const campaignRoutes = require("./v1/campaignRoutes");
+const profileRoutes = require("./v1/profileRoutes");
 
 const port = process.env.PORT || 5000;
 

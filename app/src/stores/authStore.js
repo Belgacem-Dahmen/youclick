@@ -33,13 +33,6 @@ export const useAuthStore = defineStore("auth", () => {
   const register = async (formData) => {
     try {
       const response = await axios.post("/auth/register", formData);
-      const { token: newToken } = response.data;
-
-      // Store token and user_roleid in localStorage
-      localStorage.setItem("token", newToken);
-
-      // Update state
-      token.value = newToken;
     } catch (error) {
       console.error("Registration failed:", error);
       throw error;

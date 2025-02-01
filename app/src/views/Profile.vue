@@ -1,8 +1,8 @@
 <template>
+  <BaseHeader header="Profile" />
   <form class="m-6 p-10">
-    <div class="space-y-12 ">
+    <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
-        <h2 class="text-base/7 font-semibold text-gray-900">Profile</h2>
         <p class="mt-1 text-sm/6 text-gray-600">
           This information will be displayed publicly so be careful what you
           share.
@@ -10,98 +10,49 @@
 
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div class="sm:col-span-4">
-            <label
-              for="username"
-              class="block text-sm/6 font-medium text-gray-900"
-              >Username</label
-            >
-            <div class="mt-2">
-              <div
-                class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
-              >
-                <div
-                  class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6"
-                >
-                  workcation.com/
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                  placeholder="janesmith"
+            <BaseInput
+              label="Username"
+              id="username"
+              name="username"
+              placeholder="janesmith"
+              prefix="workcation.com/"
+            />
+          </div>
+
+          <div class="col-span-full">
+            <BaseTextarea
+              label="About"
+              id="about"
+              name="about"
+              description="Write a few sentences about yourself."
+            />
+          </div>
+
+          <div class="col-span-full">
+            <ProfilePhoto>
+              <template #icon>
+                <UserCircleIcon
+                  class="size-12 text-gray-300"
+                  aria-hidden="true"
                 />
-              </div>
-            </div>
+              </template>
+            </ProfilePhoto>
           </div>
 
           <div class="col-span-full">
-            <label for="about" class="block text-sm/6 font-medium text-gray-900"
-              >About</label
+            <BaseFileUpload
+              label="Cover photo"
+              id="file-upload"
+              name="file-upload"
+              fileTypes="PNG, JPG, GIF up to 10MB"
             >
-            <div class="mt-2">
-              <textarea
-                name="about"
-                id="about"
-                rows="3"
-                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              />
-            </div>
-            <p class="mt-3 text-sm/6 text-gray-600">
-              Write a few sentences about yourself.
-            </p>
-          </div>
-
-          <div class="col-span-full">
-            <label for="photo" class="block text-sm/6 font-medium text-gray-900"
-              >Photo</label
-            >
-            <div class="mt-2 flex items-center gap-x-3">
-              <UserCircleIcon
-                class="size-12 text-gray-300"
-                aria-hidden="true"
-              />
-              <button
-                type="button"
-                class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
-              >
-                Change
-              </button>
-            </div>
-          </div>
-
-          <div class="col-span-full">
-            <label
-              for="cover-photo"
-              class="block text-sm/6 font-medium text-gray-900"
-              >Cover photo</label
-            >
-            <div
-              class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
-            >
-              <div class="text-center">
+              <template #icon>
                 <PhotoIcon
                   class="mx-auto size-12 text-gray-300"
                   aria-hidden="true"
                 />
-                <div class="mt-4 flex text-sm/6 text-gray-600">
-                  <label
-                    for="file-upload"
-                    class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      class="sr-only"
-                    />
-                  </label>
-                  <p class="pl-1">or drag and drop</p>
-                </div>
-                <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-              </div>
-            </div>
+              </template>
+            </BaseFileUpload>
           </div>
         </div>
       </div>
@@ -467,4 +418,11 @@
 <script setup>
 import { PhotoIcon, UserCircleIcon } from "@heroicons/vue/24/solid";
 import { ChevronDownIcon } from "@heroicons/vue/16/solid";
+import BaseHeader from "@/components/ui/BaseHeader.vue";
+import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseTextarea from "@/components/ui/BaseTextarea.vue";
+import BaseFileUpload from "@/components/ui/BaseFileUpload.vue";
+import MainForm from "@/components/ui/MainForm.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
+
 </script>
