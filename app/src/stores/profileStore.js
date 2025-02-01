@@ -27,8 +27,7 @@ export const useProfileStore = defineStore("profile", () => {
       const data = response.data;
 
       // Update the profile object with the fetched data
-      Object.assign(profile, data);
-      console.log(profile); // Check the updated profile
+      Object.assign(profile, data.profile);
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
@@ -43,7 +42,7 @@ export const useProfileStore = defineStore("profile", () => {
       );
       const data = response.data;
       // Update the profile object with the new data
-      Object.assign(profile, data);
+      Object.assign(profile, data.profile);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
