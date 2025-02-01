@@ -425,4 +425,14 @@ import BaseFileUpload from "@/components/ui/BaseFileUpload.vue";
 import MainForm from "@/components/ui/MainForm.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 
+import { useProfileStore } from "@/stores/profileStore";
+import { onMounted } from "vue";
+
+// Access the profile store
+const profileStore = useProfileStore();
+
+// Fetch the profile data when the component is mounted
+onMounted(async () => {
+  await profileStore.getProfile();
+});
 </script>

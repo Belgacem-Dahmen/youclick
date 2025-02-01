@@ -1,21 +1,24 @@
 // stores/auth.js
 import { defineStore } from "pinia";
-import axios from "../config/axios";
+import axiosInstance from "../config/axios";
 import { ref } from "vue";
 
 export const useAuthStore = defineStore("auth", () => {
   const token = ref(localStorage.getItem("token") || null);
+  const user_id = ref(localStorage.getItem("user_id"));
 
   const login = async (formData) => {
     try {
-      const response = await axios.post("/auth/login", formData);
-      const { token: newToken } = response.data;
+      const response = await axiosInstance.post("/auth/login", formData);
+      const { token: newToken, user_id: newUserId } = response.data;
 
-      // Store token and user_roleid in localStorage
+      // Store token and user_id in localStorage
       localStorage.setItem("token", newToken);
+      localStorage.setItem("user_id", newUserId);
 
-      // Update state
+      // Update state with the new token and user_id
       token.value = newToken;
+      user_id.value = newUserId; // Assign newUserId to user_id state
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -32,7 +35,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   const register = async (formData) => {
     try {
-      const response = await axios.post("/auth/register", formData);
+      const response = await axiosInstance.post("/auth/register", formData);
     } catch (error) {
       console.error("Registration failed:", error);
       throw error;
