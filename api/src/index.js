@@ -26,6 +26,7 @@ app.use("/api/v1/tests", testRoutes);
 app.use("/api/v1/roles", roleRoutes);
 app.use("/api/v1/testcases", testCaseRoutes);
 app.use("/api/v1/campaigns", campaignRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

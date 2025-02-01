@@ -1,11 +1,30 @@
 // profileController.js
 
-const getProfileInfos = (req, res) => {
-  res.send("Profile info");
+const Profile = require("../models/Profile");
+
+const getProfileInfos = async (req, res) => {
+  const user_id = req.params.id;
+try {
+    const profile = await Profile.getProfileByUserId(user_id); // Fetch profile by ID
+    if (profile) {
+      res.json({ message: `Profile info for user ID ${user_id}`, profile });
+    } else {
+      res
+        .status(404)
+        .json({ message: `Profile not found for user ID ${user_id}` });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Error fetching profile: ${error.message}` });
+  }
 };
 
 const updateProfile = (req, res) => {
-  res.send(`Profile with ID ${req.params.id} updated successfully`);
+  const user_id = req.params.id; // Get the user ID from request params
+  res.json({
+    message: `Profile with ID ${user_id} updated successfully`,
+  });
 };
 
 module.exports = { getProfileInfos, updateProfile };
