@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
-import axios from "axios"; // You can replace this with your API service
-import axiosInstance from "@/config/axios";
+import axiosInstance from "@/config/useAxios";
 
 export const useProfileStore = defineStore("profile", () => {
   // Define the profile as a reactive object
@@ -41,7 +40,6 @@ export const useProfileStore = defineStore("profile", () => {
         updatedProfile
       );
       const data = response.data;
-      // Update the profile object with the new data
       Object.assign(profile, data.profile);
     } catch (error) {
       console.error("Error updating profile:", error);

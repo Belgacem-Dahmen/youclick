@@ -426,6 +426,7 @@ import BaseTextarea from "@/components/ui/BaseTextarea.vue";
 import BaseFileUpload from "@/components/ui/BaseFileUpload.vue";
 import MainForm from "@/components/ui/MainForm.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
+import ProfilePhoto from "@/components/ui/ProfilePhoto.vue";
 
 import { useProfileStore } from "@/stores/profileStore";
 import { onMounted } from "vue";
