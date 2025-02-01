@@ -45,8 +45,8 @@
 
       <p class="mt-4 text-center text-sm text-gray-600">
         Don't have an account?
-        <a href="/register" class="text-blue-600 hover:text-blue-700"
-          >Register</a
+        <RouterLink to="/register" class="text-blue-600 hover:text-blue-700"
+          >Register</RouterLink
         >
       </p>
     </div>
@@ -57,13 +57,16 @@
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
-const router = useRouter()
+const router = useRouter();
 const email = ref("");
 const password = ref("");
 const authStore = useAuthStore();
 
 const handleLogin = async () => {
-  
+  const formData = {
+    email: email.value,
+    password: password.value,
+  };
 
   try {
     await authStore.login(formData);

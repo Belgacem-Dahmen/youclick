@@ -36,7 +36,7 @@ export const useProfileStore = defineStore("profile", () => {
   const updateProfile = async (updatedProfile) => {
     try {
       const response = await axiosInstance.put(
-        `/api/profile/${profile.user_id}`,
+        `/profile/${profile.user_id}`,
         updatedProfile
       );
       const data = response.data;

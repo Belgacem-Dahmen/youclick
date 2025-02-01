@@ -2,11 +2,10 @@
 import { defineStore } from "pinia";
 import axiosInstance from "../config/useAxios";
 import { ref } from "vue";
-import { useProfileStore } from "./profileStore";
 
 export const useAuthStore = defineStore("auth", () => {
   const token = ref(localStorage.getItem("token") || null);
-  const user_id = ref(localStorage.getItem("user_id"));
+  const user_id = ref(localStorage.getItem("user_id") || null);
 
   const login = async (formData) => {
     try {
@@ -33,7 +32,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     // Reset state
     token.value = null;
-    useProfileStore.value = null;
+    user_id.value = null;
   };
 
   const register = async (formData) => {

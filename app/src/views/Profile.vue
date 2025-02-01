@@ -1,7 +1,7 @@
 <template>
   <BaseHeader header="Profile" />
   <GlobalLoader v-if="loading" />
-  <form class="m-6 p-10">
+  <form @submit.prevent="handleUpdate" class="m-6 p-10">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <p class="mt-1 text-sm/6 text-gray-600">
@@ -11,23 +11,42 @@
 
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div class="sm:col-span-4">
-            <BaseInput
-              label="Username"
-              id="username"
-              name="username"
-              :placeholder="profileStore.profile.username"
-              v-model="profileStore.profile.username"
-            />
+            <div class="sm:col-span-3">
+              <label
+                for="first-name"
+                class="block text-sm/6 font-medium text-gray-900"
+                >Username</label
+              >
+              <div class="mt-2">
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  v-model="username"
+                  autocomplete="given-name"
+                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
           </div>
 
           <div class="col-span-full">
-            <BaseTextarea
-              label="About"
-              id="about"
-              name="about"
-              description="Write a few sentences about yourself."
-              v-model="profileStore.profile.about"
-            />
+            <div>
+              <label
+                :for="about"
+                class="block text-sm/6 font-medium text-gray-900"
+              >
+                About</label
+              >
+              <div class="mt-2">
+                <textarea
+                  name="about"
+                  v-model="about"
+                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm/6"
+                ></textarea>
+              </div>
+              <p class="mt-3 text-sm/6 text-gray-600"></p>
+            </div>
           </div>
 
           <div class="col-span-full">
@@ -79,6 +98,7 @@
                 type="text"
                 name="first-name"
                 id="first-name"
+                v-model="firstname"
                 autocomplete="given-name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -95,6 +115,7 @@
               <input
                 type="text"
                 name="last-name"
+                v-model="lastname"
                 id="last-name"
                 autocomplete="family-name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -113,6 +134,7 @@
                 type="email"
                 autocomplete="email"
                 v-model="profileStore.profile.email"
+                disabled
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
@@ -129,6 +151,7 @@
                 id="country"
                 name="country"
                 autocomplete="country-name"
+                v-model="country"
                 class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               >
                 <option>United States</option>
@@ -153,6 +176,7 @@
                 type="text"
                 name="street-address"
                 id="street-address"
+                v-model="address"
                 autocomplete="street-address"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -167,6 +191,7 @@
               <input
                 type="text"
                 name="city"
+                v-model="city"
                 id="city"
                 autocomplete="address-level2"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -185,6 +210,7 @@
                 type="text"
                 name="region"
                 id="region"
+                v-model="state"
                 autocomplete="address-level1"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -202,6 +228,7 @@
                 type="text"
                 name="postal-code"
                 id="postal-code"
+                v-model="zipcode"
                 autocomplete="postal-code"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -410,7 +437,6 @@
       </button>
       <button
         type="submit"
-        @submit.prevent="handleUpdate"
         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
         Save
@@ -440,13 +466,54 @@ const loading = ref(true);
 // Fetch the profile data when the component is mounted
 onMounted(async () => {
   await profileStore.getProfile();
+  const profile = profileStore.profile; // adjust this depending on your store structure
+  // Set the fetched data to the refs
+  username.value = profile.username;
+  about.value = profile.about;
+  // Set other fields accordingly
+  firstname.value = profile.firstname;
+  lastname.value = profile.lastname;
+  country.value = profile.country;
+  address.value = profile.address;
+  city.value = profile.city;
+  state.value = profile.state;
+  zipcode.value = profile.zipcode;
+
   loading.value = false;
 });
-const formData = {
-    email: email.value,
-    password: password.value,
+
+const username = ref("");
+const about = ref("");
+const email = ref("");
+const firstname = ref("");
+const coverphoto = ref("");
+const lastname = ref("");
+const country = ref("");
+const address = ref("");
+const city = ref("");
+const state = ref("");
+const zipcode = ref("");
+
+const handleUpdate = async () => {
+  const formData = {
+    username: username.value,
+    about: about.value,
+    coverphoto: coverphoto.value,
+    firstname: firstname.value,
+    lastname: lastname.value,
+    country: country.value,
+    address: address.value,
+    city: city.value,
+    state: state.value,
+    zipcode: zipcode.value,
   };
-const handleUpdate = () => {
-  profileStore.updateProfile();
+
+  try {
+    loading.value = true;
+    await profileStore.updateProfile(formData);
+    loading.value = false;
+  } catch (error) {
+    console.error("update failed:", error);
+  }
 };
 </script>

@@ -26,8 +26,13 @@ const updateProfile = async (req, res) => {
 
   try {
     const affectedRows = await Profile.update(user_id, updateData);
+
     if (affectedRows > 0) {
-      res.json({ message: `Profile with ID ${user_id} updated successfully` });
+      const profile = await Profile.getProfileByUserId(user_id);
+      res.json({
+        message: `Profile with ID ${user_id} updated successfully`,
+        profile,
+      });
     } else {
       res.status(404).json({ message: "Profile not found or no changes made" });
     }

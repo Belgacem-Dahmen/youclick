@@ -14,7 +14,6 @@ const Profile = {
 
   // Create a new profile
   async create(profileData) {
-    console.log(profileData);
     const {
       user_id,
       email,
@@ -61,7 +60,6 @@ const Profile = {
   // Update an existing profile
   async update(user_id, updateData) {
     const allowedFields = [
-      "email",
       "username",
       "about",
       "coverphoto",
