@@ -57,6 +57,43 @@ const Profile = {
       throw new Error("Error creating profile: " + error.message);
     }
   },
+
+  // Update an existing profile
+  async update(user_id, updateData) {
+    const allowedFields = [
+      "email",
+      "username",
+      "about",
+      "coverphoto",
+      "firstname",
+      "lastname",
+      "country",
+      "address",
+      "city",
+      "state",
+      "zipcode",
+    ];
+    const fields = Object.keys(updateData).filter((field) =>
+      allowedFields.includes(field)
+    );
+
+    if (fields.length === 0) {
+      throw new Error("No valid fields to update");
+    }
+
+    const setClause = fields.map((field) => `${field} = ?`).join(", ");
+    const values = fields.map((field) => updateData[field]);
+    values.push(user_id);
+
+    const query = `UPDATE profiles SET ${setClause} WHERE user_id = ?`;
+
+    try {
+      const [result] = await database.execute(query, values);
+      return result.affectedRows; // Number of rows updated
+    } catch (error) {
+      throw new Error("Error updating profile: " + error.message);
+    }
+  },
 };
 
 module.exports = Profile;

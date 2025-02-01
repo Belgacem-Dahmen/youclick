@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const roles = require('../Enums/Roles');
-const User = require('../models/User');
-// const User = require('../models/User'); // assuming you have a User model
+
 
 // Middleware to check if the user is authenticated
 const authenticateUser = (req, res, next) => {
