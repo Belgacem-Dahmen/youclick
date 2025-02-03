@@ -49,7 +49,7 @@
                   <span class="sr-only">Open user menu</span>
                   <img
                     class="size-8 rounded-full"
-                    :src="user.imageUrl"
+                    :src="profile.coverphoto ?? user.imageUrl"
                     alt=""
                   />
                 </MenuButton>
@@ -123,7 +123,11 @@
       <div class="border-t border-gray-700 pt-4 pb-3">
         <div class="flex items-center px-5">
           <div class="shrink-0">
-            <img class="size-10 rounded-full" :src="user.imageUrl" alt="" />
+            <img
+              class="size-10 rounded-full"
+              :src="profile.coverphoto ?? user.imageUrl"
+              alt=""
+            />
           </div>
           <div class="ml-3">
             <div class="text-base/5 font-medium text-white">
@@ -152,12 +156,12 @@
             >{{ item.name }}</DisclosureButton
           >
           <form @submit.prevent="handleLogout">
-          <button
-            type="submit"
-            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-          >
-            logout
-          </button>
+            <button
+              type="submit"
+              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+            >
+              logout
+            </button>
           </form>
         </div>
       </div>
@@ -178,8 +182,15 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
-const router = useRouter();
+import { useProfileStore } from "@/stores/profileStore";
+import { onMounted } from "vue";
 
+onMounted(async () => {
+  await profileStore.getProfile();
+});
+const router = useRouter();
+const profileStore = useProfileStore();
+const { profile } = useProfileStore();
 const user = {
   name: "kacem Dahmen",
   email: "admin@admin.com",

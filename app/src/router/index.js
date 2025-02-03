@@ -16,7 +16,7 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
-    meta: { layout: "guest", requiresAuth: false },
+    meta: { layout: "auth", requiresAuth: true },
   },
   {
     path: "/login",
@@ -65,6 +65,7 @@ router.beforeEach((to, from, next) => {
   ) {
     next("/dashboard"); // Redirect authenticated users away from guest pages
   } else {
+    
     next();
   }
 });
