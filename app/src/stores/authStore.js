@@ -1,7 +1,7 @@
 // stores/auth.js
 import { defineStore } from "pinia";
 import axiosInstance from "../config/useAxios";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useAuthStore = defineStore("auth", () => {
   const token = ref(localStorage.getItem("token") || null);
@@ -24,7 +24,8 @@ export const useAuthStore = defineStore("auth", () => {
       throw error;
     }
   };
-
+  const isAuthenticated = computed(() => !!user.value);
+  const getUserRole = computed(() => user.value?.role || "guest");
   const logout = () => {
     // Clear token and user_roleid from localStorage
     localStorage.removeItem("token");
@@ -44,5 +45,5 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  return { token, login, logout, register };
+  return { token, login, logout, register, isAuthenticated, getUserRole };
 });

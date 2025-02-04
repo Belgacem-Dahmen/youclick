@@ -66,6 +66,7 @@
               id="file-upload"
               name="file-upload"
               fileTypes="PNG, JPG, GIF up to 10MB"
+              @change="uploadFile"
             >
               <template #icon>
                 <PhotoIcon
@@ -470,7 +471,6 @@ onMounted(async () => {
   // Set the fetched data to the refs
   username.value = profile.username;
   about.value = profile.about;
-  // Set other fields accordingly
   firstname.value = profile.firstname;
   lastname.value = profile.lastname;
   country.value = profile.country;
@@ -486,19 +486,21 @@ const username = ref("");
 const about = ref("");
 const email = ref("");
 const firstname = ref("");
-const coverphoto = ref("");
 const lastname = ref("");
 const country = ref("");
 const address = ref("");
 const city = ref("");
 const state = ref("");
 const zipcode = ref("");
+const selectedFile = ref("");
+const uploadFile = (e) => {
+  selectedFile.value = e.target.files;
 
+};
 const handleUpdate = async () => {
   const formData = {
     username: username.value,
     about: about.value,
-    coverphoto: coverphoto.value,
     firstname: firstname.value,
     lastname: lastname.value,
     country: country.value,

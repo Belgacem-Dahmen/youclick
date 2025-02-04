@@ -56,6 +56,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authRequired = to.matched.some((record) => record.meta.requiresAuth);
+  const adminRequired = to.matched.some((record) => record.meta.requiresAdmin);
+
+
+
+
   if (authRequired && !isAuthenticated()) {
     next("/login"); // Redirect to login if not authenticated
   } else if (
@@ -65,7 +70,6 @@ router.beforeEach((to, from, next) => {
   ) {
     next("/dashboard"); // Redirect authenticated users away from guest pages
   } else {
-    
     next();
   }
 });
